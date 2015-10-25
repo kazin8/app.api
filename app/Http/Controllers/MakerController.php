@@ -28,9 +28,15 @@ class MakerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requests\CreateMakerRequest $request)
     {
         //
+        $values = $request->only(['name', 'phone']);
+
+        Maker::create($values);
+
+
+        return response()->json(['message'=>'The maker create corectly', 'code'=>201], 201);
     }
 
     /**
