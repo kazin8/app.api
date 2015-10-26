@@ -17,11 +17,13 @@ class DatabaseSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Maker::truncate();
+        \App\User::truncate();
 
         Model::unguard();
 
         $this->call('MakerSeed');
         $this->call('VehicleSeed');
+        $this->call('UsersSeed');
 
         Model::reguard();
     }
