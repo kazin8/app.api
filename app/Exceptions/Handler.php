@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Mockery\Matcher\Not;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -42,8 +43,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException($e->getMessage(), $e);
+        if ($e instanceof NotFoundHttpException){
+            return response()->json(['message'=>'Method not found. Please, verify your request', 'code'=>400], 400);
+        }else{
+            return response()->json(['message'=>'Unexpected Error. Try again later', 'code'=>500], 500);
         }
 
         return parent::render($request, $e);
